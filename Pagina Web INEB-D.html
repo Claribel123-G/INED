@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INEB-D | Comentarios y Contenido</title>
+    <style>
+        body {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            background-color: #e6ccff;
+            color: #2c003e;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #52057b;
+            color: #f8f2ff;
+            padding: 25px;
+            text-align: center;
+            border-bottom: 5px solid #2c003e;
+        }
+
+        header h1 {
+            font-weight: 700;
+            font-size: 2.2em;
+            margin: 0;
+        }
+
+        header h2 {
+            font-size: 1em;
+            font-weight: 400;
+            margin: 5px 0 0 0;
+            color: #d9b3ff;
+        }
+
+        main {
+            padding: 30px;
+            max-width: 900px;
+            margin: 20px auto;
+            background-color: #f4e3ff;
+            border-radius: 15px;
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #2c003e;
+            padding-bottom: 10px;
+        }
+
+        .navigation button {
+            padding: 10px 15px;
+            background-color: #8f00ff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.25s;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+
+        .navigation button:hover {
+            background-color: #5c007a;
+        }
+
+        .navigation button.active {
+            background-color: #5c007a;
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        form {
+            display: grid;
+            gap: 10px;
+        }
+
+        input, textarea, button {
+            padding: 12px;
+            border: 2px solid #8f00ff;
+            border-radius: 8px;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        button {
+            background-color: #8f00ff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.25s;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #5c007a;
+        }
+
+        .comment-list {
+            margin-top: 25px;
+        }
+
+        .comment-item {
+            background-color: #f8f2ff;
+            padding: 15px;
+            border-left: 4px solid #52057b;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+
+        .comment-item img {
+            max-width: 100%;
+            margin-top: 10px;
+            border-radius: 6px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px;
+            background-color: #52057b;
+            color: #f8f2ff;
+            margin-top: 40px;
+            border-top: 5px solid #2c003e;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>INEB-D</h1>
+        <h2>Instituto Nacional de Educación Básica y Diversificada "Sergio Leonel Celis Navas" J.V.</h2>
+    </header>
+
+    <main>
+        <nav class="navigation">
+            <button class="tab-button active" data-target="comments-section">Comentarios</button>
+            <button class="tab-button" data-target="gallery-section">Galería</button>
+            <button class="tab-button" data-target="links-section">Enlaces</button>
+        </nav>
+
+        <section id="comments-section" class="content-section active">
+            <form id="commentForm">
+                <input type="text" id="name" placeholder="Nombre" required autocomplete="off">
+                <textarea id="comment" placeholder="Pon tu comentario =) " rows="4" required></textarea>
+                <label for="photo">Publica una fotografía </label>
+                <input type="file" id="photo" accept="image/*">
+                <button type="submit">Publicar</button>
+            </form>
+
+            <div class="comment-list" id="commentList">
+                <h3>Comentarios recientes</h3>
+            </div>
+        </section>
+
+        <section id="gallery-section" class="content-section">
+            <h3>Galería de imágenes publicadas</h3>
+            <div id="galleryContent">
+                <!-- Las imágenes aparecerán aquí -->
+            </div>
+        </section>
+
+        <section id="links-section" class="content-section">
+            <h3>Enlaces compartidos</h3>
+            <div id="linksContent">
+                <!-- Los enlaces compartidos aparecerán aquí -->
+            </div>
+        </section>
+    </main>
+
+
+
+<!-- Sección de la página de Facebook -->
+<div class="facebook-container" style="text-align: center; margin: 0 auto; max-width: 600px;">
+    <div class="facebook-message">Visita nuestra página de Facebook:</div>
+    <a class="facebook-link" href="https://www.facebook.com/profile.php?id=100063559627992" target="_blank">
+        <button style="padding: 10px 20px; background-color: #b39ddb; color: white; border: none; border-radius: 5px; cursor: pointer;">
+            Ir a Facebook
+        </button>
+    </a>
+</div>
+
+<!-- Facebook SDK para cargar el plugin -->
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" 
+        src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v16.0" 
+        nonce="JKXFnHT6"></script>
+
+
+
+
+
+    <footer>
+        &copy; 2024 INEB-D 
+    </footer>
+
+    <script>
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const contentSections = document.querySelectorAll('.content-section');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                contentSections.forEach(section => section.classList.remove('active'));
+
+                button.classList.add('active');
+                document.getElementById(button.dataset.target).classList.add('active');
+            });
+        });
+
+        const commentForm = document.getElementById('commentForm');
+        const commentList = document.getElementById('commentList');
+
+        function displayComments() {
+            commentList.innerHTML = '<h3>Comentarios recientes</h3>';
+            const comments = JSON.parse(localStorage.getItem('comments')) || [];
+
+            comments.forEach(comment => {
+                const commentDiv = document.createElement('div');
+                commentDiv.classList.add('comment-item');
+
+                const nameElement = document.createElement('h4');
+                nameElement.textContent = comment.name;
+                commentDiv.appendChild(nameElement);
+
+                const textElement = document.createElement('p');
+                textElement.textContent = comment.text;
+                commentDiv.appendChild(textElement);
+
+                if (comment.image) {
+                    const imgElement = document.createElement('img');
+                    imgElement.src = comment.image;
+                    commentDiv.appendChild(imgElement);
+                }
+
+                commentList.appendChild(commentDiv);
+            });
+        }
+
+        function addComment(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const text = document.getElementById('comment').value;
+            const photoInput = document.getElementById('photo');
+            const file = photoInput.files[0];
+
+            const reader = new FileReader();
+            reader.onloadend = function () {
+                const comments = JSON.parse(localStorage.getItem('comments')) || [];
+                const newComment = {
+                    name: name,
+                    text: text,
+                    image: file ? reader.result : null,
+                    timestamp: text.startsWith('.') ? Date.now() : null
+                };
+
+                comments.push(newComment);
+                localStorage.setItem('comments', JSON.stringify(comments));
+                displayComments();
+                commentForm.reset();
+            };
+
+            if (file) reader.readAsDataURL(file);
+            else reader.onloadend();
+        }
+
+        function removeOldComments() {
+            const comments = JSON.parse(localStorage.getItem('comments')) || [];
+            const currentTime = Date.now();
+            const updatedComments = comments.filter(comment => {
+                return !comment.timestamp || (currentTime - comment.timestamp < 600000);
+            });
+
+            localStorage.setItem('comments', JSON.stringify(updatedComments));
+        }
+
+        commentForm.addEventListener('submit', addComment);
+        setInterval(() => {
+            removeOldComments();
+            displayComments();
+        }, 6000);
+
+        displayComments();
+    </script>
+
+
+
+</body>
+</html>
